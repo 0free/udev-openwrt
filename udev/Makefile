@@ -6,8 +6,13 @@ PKG_VERSION:=182
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=@KERNEL/linux/utils/kernel/hotplug
+PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/udev.git
 PKG_HASH:=a0638858c5d3447e6b61409e488df65239343a81ccb258a89046c83841dd7890
+PKG_MIRROR_HASH:=cb6e22158843486ed80588347f8cbc76ed6e4bd711bcff46124b66835916ec55
+
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_VERSION:=$(PKG_VERSION)
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
@@ -19,7 +24,7 @@ define Package/udev
 	CATEGORY:=Utilities
 	TITLE:=udev
 	MENU:=1
-	DEPENDS:=+librt
+	DEPENDS:=+libblkid +libkmod +usbutils
 	PROVIDES:=udev
 	CONFLICTS:=eudev
 endef
@@ -40,11 +45,12 @@ define Package/udev/config
 endef
 
 TARGET_CFLAGS += 
-TARGET_LDFLAGS += -L$(STAGING_DIR)/usr/lib
+TARGET_LDFLAGS += 
 
-CONFIGURE_ARGS += --prefix=/usr --sbindir=/sbin --exec-prefix= --libexecdir=/lib/udev --sysconfdir=/etc \
-		--disable-hwdb --disable-keymap --disable-gudev --disable-introspection --disable-gtk-doc-html \
-		$(udev-args-y)
+CONFIGURE_ARGS += --disable-keymap --disable-gudev --disable-introspection --disable-gtk-doc-html
+CONFIGURE_ARGS += --prefix=/usr --exec-prefix= --sysconfdir=/etc --sbindir=/sbin
+CONFIGURE_ARGS += USBUTILS_LIBS=$(STAGING_DIR)/usr/lib
+CONFIGURE_ARGS +=  $(udev-args-y)
 
 udev-args-$(CONFIG_UDEV_DISABLE_LOGGING) += --disable-logging
 udev-args-$(CONFIG_UDEV_ENABLE_DEBUG) += --disable-debug
@@ -75,10 +81,6 @@ udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_scsi_id) += scsi_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_usb_id) += usb_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_v4l_id) += v4l_id
 udev-extra-rules-$(CONFIG_UDEV_EXTRA_v4l_id) += 60-persistent-v4l.rules
-
-define Build/Compile
-	$(call Build/Compile/Default)
-endef
 
 define Build/InstallDev
 
