@@ -7,8 +7,8 @@ PKG_RELEASE:=$(AUTORELEASE)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/udev.git
-PKG_HASH:=a0638858c5d3447e6b61409e488df65239343a81ccb258a89046c83841dd7890
-PKG_MIRROR_HASH:=cb6e22158843486ed80588347f8cbc76ed6e4bd711bcff46124b66835916ec55
+PKG_HASH:=a7d3ab3d6489f5c2c2ca1514fc6a8a2288e4aa40bb84b0a90bdec0c0235ea4aa
+PKG_MIRROR_HASH:=319ad5d5123320a50a5b50f3ac59adae8bd533b04c528bbde9289192e920132e
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
@@ -84,10 +84,6 @@ udev-extra-rules-$(CONFIG_UDEV_QEMU) += 42-qemu-usb.rules
 udev-extra-rules-$(CONFIG_UDEV_RULE_GENERATOR) += 75-cd-aliases-generator.rules
 udev-extra-rules-$(CONFIG_UDEV_RULE_GENERATOR) += 75-persistent-net-generator.rules
 udev-extra-rules-$(CONFIG_UDEV_V4L_ID) += 60-persistent-v4l.rules
-
-define Build/Compile
-	$(call Build/Compile/Default)
-endef
 
 define Build/InstallDev
 
