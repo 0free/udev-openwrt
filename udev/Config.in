@@ -1,3 +1,6 @@
+menu "Configuration"
+	depends on PACKAGE_udev
+
 config UDEV_DISABLE_LOGGING
 	bool "Disable udev logging to syslog"
 	default n
@@ -99,3 +102,5 @@ config UDEV_EXTRA_v4l_id
 	default y
 	help
 		udev callout to identify Video4Linux devices
+
+endmenu
