@@ -47,36 +47,48 @@ TARGET_LDFLAGS +=
 CONFIGURE_ARGS += --disable-keymap --disable-gudev --disable-introspection --disable-gtk-doc --disable-gtk-doc-html
 CONFIGURE_ARGS += --prefix=/usr --exec-prefix= --sysconfdir=/etc --sbindir=/sbin
 CONFIGURE_ARGS += USBUTILS_LIBS=$(STAGING_DIR)/usr/lib
-CONFIGURE_ARGS +=  $(udev-args-y)
 
-udev-args-$(CONFIG_UDEV_DISABLE_LOGGING) += --disable-logging
-udev-args-$(CONFIG_UDEV_ENABLE_DEBUG) += --disable-debug
-udev-args-$(CONFIG_UDEV_EXTRA_edd_id) += --disable-edd
-udev-args-$(CONFIG_UDEV_EXTRA_floppy) += --disable-floppy
+ifeq ($(CONFIG_UDEV_DISABLE_LOGGING),y)
+	CONFIGURE_ARGS += --disable-logging
+endif
+
+ifeq ($(CONFIG_UDEV_DISABLE_DEBUG),y)
+	CONFIGURE_ARGS += --disable-debug
+endif
+
+ifeq ($(CONFIG_UDEV_EXTRA_edd_id),n)
+	CONFIGURE_ARGS += --disable-edd
+endif
+
+ifeq ($(CONFIG_UDEV_EXTRA_floppy),n)
+	CONFIGURE_ARGS += --disable-floppy
+endif
 
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_accelerometer) += accelerometer
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_accelerometer) += 61-accelerometer.rules
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_ata_id) += ata_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_cdrom_id) += cdrom_id
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_cdrom_id) += 60-cdrom_id.rules
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_collect) += collect
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_edd_id) += edd_id
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_edd_id) += 61-persistent-storage-edd.rules
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_firmware) += firmware
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_firmware) += 50-firmware.rules
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_floppy) += create_floppy_devices
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_input_id) += input_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_mtd_probe) += mtd_probe
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_mtd_probe) += 75-probe_mtd.rules
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_path_id) += path_id
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_qemu) += 42-qemu-usb.rules
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_rule_generator) += write_cd_rules write_net_rules
-udev-extra-lib-data-$(CONFIG_UDEV_EXTRA_rule_generator) += rule_generator.functions
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_rule_generator) += 75-cd-aliases-generator.rules
-udev-extra-rules-$(CONFIG_UDEV_EXTRA_rule_generator) += 75-persistent-net-generator.rules
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_scsi_id) += scsi_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_usb_id) += usb_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_v4l_id) += v4l_id
+
+udev-extra-lib-data-$(CONFIG_UDEV_EXTRA_rule_generator) += rule_generator.functions
+
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_accelerometer) += 61-accelerometer.rules
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_cdrom_id) += 60-cdrom_id.rules
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_edd_id) += 61-persistent-storage-edd.rules
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_firmware) += 50-firmware.rules
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_mtd_probe) += 75-probe_mtd.rules
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_qemu) += 42-qemu-usb.rules
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_rule_generator) += 75-cd-aliases-generator.rules
+udev-extra-rules-$(CONFIG_UDEV_EXTRA_rule_generator) += 75-persistent-net-generator.rules
 udev-extra-rules-$(CONFIG_UDEV_EXTRA_v4l_id) += 60-persistent-v4l.rules
 
 define Build/Compile
