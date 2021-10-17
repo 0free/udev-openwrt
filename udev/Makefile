@@ -3,7 +3,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=udev
 PKG_VERSION:=182
-PKG_RELEASE:=1
+PKG_RELEASE:=$(AUTORELEASE)
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/udev.git
@@ -47,7 +47,7 @@ endef
 TARGET_CFLAGS += 
 TARGET_LDFLAGS += 
 
-CONFIGURE_ARGS += --disable-keymap --disable-gudev --disable-introspection --disable-gtk-doc-html
+CONFIGURE_ARGS += --disable-keymap --disable-gudev --disable-introspection --without-gtk-doc --disable-gtk-doc-html
 CONFIGURE_ARGS += --prefix=/usr --exec-prefix= --sysconfdir=/etc --sbindir=/sbin
 CONFIGURE_ARGS += USBUTILS_LIBS=$(STAGING_DIR)/usr/lib
 CONFIGURE_ARGS +=  $(udev-args-y)
@@ -81,6 +81,10 @@ udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_scsi_id) += scsi_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_usb_id) += usb_id
 udev-extra-lib-bin-$(CONFIG_UDEV_EXTRA_v4l_id) += v4l_id
 udev-extra-rules-$(CONFIG_UDEV_EXTRA_v4l_id) += 60-persistent-v4l.rules
+
+define Build/Compile
+	$(call Build/Compile/Default)
+endef
 
 define Build/InstallDev
 
