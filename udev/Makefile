@@ -38,16 +38,13 @@ define Package/udev/conffiles
 endef
 
 define Package/udev/config
-	menu "Configuration"
-		depends on PACKAGE_udev
-		source "$(SOURCE)/Config.in"
-	endmenu
+	source "$(SOURCE)/Config.in"
 endef
 
 TARGET_CFLAGS += 
 TARGET_LDFLAGS += 
 
-CONFIGURE_ARGS += --disable-keymap --disable-gudev --disable-introspection --without-gtk-doc --disable-gtk-doc-html
+CONFIGURE_ARGS += --disable-keymap --disable-gudev --disable-introspection --disable-gtk-doc --disable-gtk-doc-html
 CONFIGURE_ARGS += --prefix=/usr --exec-prefix= --sysconfdir=/etc --sbindir=/sbin
 CONFIGURE_ARGS += USBUTILS_LIBS=$(STAGING_DIR)/usr/lib
 CONFIGURE_ARGS +=  $(udev-args-y)
