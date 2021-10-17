@@ -10,7 +10,6 @@ PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/udev.git
 PKG_HASH:=a0638858c5d3447e6b61409e488df65239343a81ccb258a89046c83841dd7890
 PKG_MIRROR_HASH:=cb6e22158843486ed80588347f8cbc76ed6e4bd711bcff46124b66835916ec55
 
-
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 
@@ -30,11 +29,11 @@ define Package/udev
 endef
 
 define Package/udev/description
-udev
+	udev
 endef
 
 define Package/udev/conffiles
-/etc/udev/udev.conf
+	/etc/udev/udev.conf
 endef
 
 define Package/udev/config
@@ -57,8 +56,7 @@ $(if $(CONFIG_UDEV_EMTD_PROBE),--enable-mtd_probe,--disable-mtd_probe) \
 $(if $(CONFIG_UDEV_RULE_GENERATOR),--enable-rule_generator,--disable-rule_generator) \
 $(if $(CONFIG_UDEV_FLOPPY),--enable-floppy,--disable-floppy) \
 $(if $(CONFIG_UDEV_PACKAGE),--with-PACKAGE,--without-PACKAGE) \
-$(if $(CONFIG_UDEV_SELINUX),--with-selinux,--without-selinux) \
-$(if $(CONFIG_UDEV_edd_id),--enable-edd,--disable-edd)
+$(if $(CONFIG_UDEV_SELINUX),--with-selinux,--without-selinux)
 
 udev-extra-lib-data-$(CONFIG_UDEV_RULE_GENERATOR) += rule_generator.functions
 
