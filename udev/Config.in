@@ -41,11 +41,7 @@ config UDEV_SELINUX
 	bool "use SELinux"
 	default n
 
-config UDEV_EDD_ID
-	bool "enable edd_id"
-	default n
-
-config UDEV_ECDROM_ID
+config UDEV_CDROM_ID
 	bool "enable cdrom_id"
 	default n
 
