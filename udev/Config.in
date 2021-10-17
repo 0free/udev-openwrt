@@ -37,6 +37,10 @@ config UDEV_PACKAGE
 	bool "use package"
 	default n
 
+config UDEV_SELINUX
+	bool "use SELinux"
+	default n
+
 config UDEV_EDD_ID
 	bool "enable edd_id"
 	default n
