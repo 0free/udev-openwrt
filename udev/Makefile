@@ -57,6 +57,7 @@ $(if $(CONFIG_UDEV_EMTD_PROBE),--enable-mtd_probe,--disable-mtd_probe) \
 $(if $(CONFIG_UDEV_RULE_GENERATOR),--enable-rule_generator,--disable-rule_generator) \
 $(if $(CONFIG_UDEV_FLOPPY),--enable-floppy,--disable-floppy) \
 $(if $(CONFIG_UDEV_PACKAGE),--with-PACKAGE,--without-PACKAGE) \
+$(if $(CONFIG_UDEV_SELINUX),--with-selinux,--without-selinux) \
 $(if $(CONFIG_UDEV_edd_id),--enable-edd,--disable-edd)
 
 udev-extra-lib-data-$(CONFIG_UDEV_RULE_GENERATOR) += rule_generator.functions
