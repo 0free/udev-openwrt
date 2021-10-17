@@ -1,106 +1,88 @@
 menu "Configuration"
 	depends on PACKAGE_udev
 
-config UDEV_DISABLE_LOGGING
-	bool "Disable udev logging to syslog"
-	default y
-	help
-		Disable logging of udev messages to syslog
-
-config UDEV_DISABLE_DEBUG
-	bool "Enable debug build of the udev package"
-	default y
-	help
-		Compile in udev debug messages
-
-config UDEV_EXTRA_edd_id
-	bool "Install udev edd_id callout"
+config UDEV_DEBUG
+	bool "enable debug messages"
 	default n
-	help
-		udev callout to identify BIOS disk drives via EDD
 
-config UDEV_EXTRA_floppy
-	bool "Install create_floppy_devices callout"
+config UDEV_LOGGING
+	bool "enable udev logging to syslog"
 	default n
-	help
-		create_floppy_devices - udev callout to create all possible floppy device based on the CMOS type
 
-config UDEV_EXTRA_cdrom_id
-	bool "Install udev cdrom_id callout"
+config UDEV_GUDEV
+	bool "enable Gobject libudev support"
+	default y
+
+config UDEV_INTROSPECTION
+	bool "enable GObject introspection support"
 	default n
-	help
-		cdrom_id - udev callout to determine the capabilities of optical drives and media
 
-config UDEV_EXTRA_accelerometer
-	bool "Install udev acceleroometer callout"
-	default y
-	help
-		accelerometer - udev callout to export device orientation through property
-
-config UDEV_EXTRA_ata_id
-	bool "Install udev ata_id callout"
-	default y
-	help
-		ata_id - udev callout to read product/serial number from ATA drives
-
-config UDEV_EXTRA_collect
-	bool "Install udev collect"
+config UDEV_KEYMAP
+	bool "enable keymap fixup support"
 	default n
-	help
-		Adds ID to the list governed by <checkpoint>
 
-config UDEV_EXTRA_firmware
-	bool "Install firmware support"
+config UDEV_MTD_PROBE
+	bool "enable MTD support"
 	default y
-	help
-		udev firmware loader via EDD
 
-config UDEV_EXTRA_input_id
-	bool "Install input_id callout"
+config UDEV_RULE_GENERATOR
+	bool "enable rule_generator"
 	default y
-	help
-		udev callout to classify input devices
 
-config UDEV_EXTRA_mtd_probe
-	bool "Install mtd_probe callout"
-	default y
-	help
-		udev callout to probe mtd devices
+config UDEV_FLOPPY
+	bool "enable floppy devices"
+	default n
 
-config UDEV_EXTRA_path_id
-	bool "Install udev path_id callout"
-	default y
-	help
-		udev callout to create a device path based unique name for a device to implement the Linux Persistent Device Naming scheme
+config UDEV_PACKAGE
+	bool "use package"
+	default n
 
-config UDEV_EXTRA_qemu
-	bool "Install qemu specific rules"
-	default y
-	help
-		install rules for autosuspension of QEMU emulated USB HID devices
+config UDEV_EDD_ID
+	bool "enable edd_id"
+	default n
 
-config UDEV_EXTRA_rule_generator
-	bool "Install udev rule_generator"
-	default y
-	help
-		add rules
+config UDEV_ECDROM_ID
+	bool "enable cdrom_id"
+	default n
 
-config UDEV_EXTRA_scsi_id
-	bool "Install udev scsi_id callout"
+config UDEV_ACCELEROMETER
+	bool "enable accelerometer"
 	default y
-	help
-		retrieve and generate a unique SCSI identifier
 
-config UDEV_EXTRA_usb_id
-	bool "Install udev usb_id callout"
+config UDEV_ATA_ID
+	bool "enable ata_id"
 	default y
-	help
-		can find the unique id of USB devices
 
-config UDEV_EXTRA_v4l_id
-	bool "Install udev v4l_id callout"
+config UDEV_COLLECT
+	bool "enable collect"
+	default n
+
+config UDEV_FIRMWARE
+	bool "install firmware support"
 	default y
-	help
-		udev callout to identify Video4Linux devices
+
+config UDEV_INPUT_ID
+	bool "Install input_id"
+	default y
+
+config UDEV_PATH_ID
+	bool "enable path_id"
+	default y
+
+config UDEV_QEMU
+	bool "install qemu specific rules"
+	default y
+
+config UDEV_SCSI_ID
+	bool "enable scsi_id"
+	default y
+
+config UDEV_USB_ID
+	bool "enable usb_id"
+	default y
+
+config UDEV_V4L_ID
+	bool "enable v4l_id"
+	default y
 
 endmenu
