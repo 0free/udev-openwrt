@@ -13,7 +13,7 @@ PKG_MIRROR_HASH:=b450009b6c6224e72418b14071e623250997ddc0ace339cd3fbab18ffc45a6a
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 
-PKG_CONFIG_PATH=$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgconfig
+PKG_CONFIG_PATH:=$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgconfig
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
@@ -42,7 +42,7 @@ define Package/udev/config
 	source "$(SOURCE)/Config.in"
 endef
 
-TARGET_CFLAGS += -L$(STAGING_DIR)/usr/lib
+TARGET_CFLAGS += 
 TARGET_LDFLAGS += -L$(STAGING_DIR)/usr/lib
 
 CONFIGURE_ARGS += --disable-manpages --disable-gtk-doc
