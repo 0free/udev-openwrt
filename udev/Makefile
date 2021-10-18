@@ -3,18 +3,20 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=udev
 PKG_VERSION:=182
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/udev.git
-PKG_HASH:=a7d3ab3d6489f5c2c2ca1514fc6a8a2288e4aa40bb84b0a90bdec0c0235ea4aa
-PKG_MIRROR_HASH:=319ad5d5123320a50a5b50f3ac59adae8bd533b04c528bbde9289192e920132e
+PKG_HASH:=12116f22cbc5258b4cc79ee6a0574730e71a8abe31badf076709d5ac33a7e2d9
+PKG_MIRROR_HASH:=b450009b6c6224e72418b14071e623250997ddc0ace339cd3fbab18ffc45a6ab
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 
+PKG_CONFIG_PATH=$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgconfig
+
 PKG_FIXUP:=autoreconf
-PKG_INSTALL:=1
+DISABLE_NLS:=--disable-nls
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -22,18 +24,17 @@ define Package/udev
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=udev
-	MENU:=1
 	DEPENDS:=+libblkid +libkmod +usbutils
 	PROVIDES:=udev
 	CONFLICTS:=eudev
 endef
 
 define Package/udev/description
-	udev
+udev
 endef
 
 define Package/udev/conffiles
-	/etc/udev/udev.conf
+/etc/udev/udev.conf
 endef
 
 define Package/udev/config
@@ -85,6 +86,14 @@ udev-extra-rules-$(CONFIG_UDEV_RULE_GENERATOR) += 75-cd-aliases-generator.rules
 udev-extra-rules-$(CONFIG_UDEV_RULE_GENERATOR) += 75-persistent-net-generator.rules
 udev-extra-rules-$(CONFIG_UDEV_V4L_ID) += 60-persistent-v4l.rules
 
+define Build/Configure
+	$(call Build/Configure/udev)
+endef
+
+define Build/Compile
+	$(call Build/Compile/udev)
+endef
+
 define Build/InstallDev
 
 	$(INSTALL_DIR)		$(1)/lib
@@ -100,11 +109,11 @@ endef
 
 define Package/udev/install
 
-	$(INSTALL_DIR)		$(1)/etc/udev/rules.d
-	$(INSTALL_DIR)		$(1)/lib/udev/rules.d
 	$(INSTALL_DIR)		$(1)/sbin
 	$(INSTALL_DIR)		$(1)/lib
 	$(INSTALL_DIR)		$(1)/lib/udev
+	$(INSTALL_DIR)		$(1)/lib/udev/rules.d
+	$(INSTALL_DIR)		$(1)/etc/udev/rules.d
 
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/sbin/udevadm
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/sbin/udevd
@@ -123,15 +132,15 @@ define Package/udev/install
 
 	$(CP)				$(PKG_INSTALL_DIR)/lib/libudev.so*					$(1)/lib
 
-ifneq ($(udev-extra-lib-bin-y),)
+	ifneq ($(udev-extra-lib-bin-y),)
 	$(INSTALL_BIN)		$(addprefix $(PKG_INSTALL_DIR)/lib/udev,$(udev-extra-lib-bin-y))
 	$(INSTALL_BIN)		$(1)/lib/udev
-endif
+	endif
 
-ifneq ($(udev-extra-lib-data-y),)
+	ifneq ($(udev-extra-lib-data-y),)
 	$(INSTALL_DATA)		$(addprefix $(PKG_INSTALL_DIR)/lib/udev,$(udev-extra-lib-data-y))
 	$(INSTALL_DATA)		$(1)/lib/udev
-endif
+	endif
 
 endef
 
