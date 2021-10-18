@@ -16,6 +16,7 @@ PKG_SOURCE_VERSION:=$(PKG_VERSION)
 PKG_CONFIG_PATH=$(STAGING_DIR)/usr/lib/pkgconfig:$(STAGING_DIR)/usr/share/pkgconfig
 
 PKG_FIXUP:=autoreconf
+PKG_INSTALL:=1
 DISABLE_NLS:=--disable-nls
 
 include $(INCLUDE_DIR)/package.mk
@@ -24,7 +25,7 @@ define Package/udev
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=udev
-	DEPENDS:=+libblkid +libkmod +usbutils
+	DEPENDS:=+libblkid +libkmod +libusb-1.0 +usbutils
 	PROVIDES:=udev
 	CONFLICTS:=eudev
 endef
@@ -41,8 +42,8 @@ define Package/udev/config
 	source "$(SOURCE)/Config.in"
 endef
 
-TARGET_CFLAGS += 
-TARGET_LDFLAGS += 
+TARGET_CFLAGS += -L$(STAGING_DIR)/usr/lib
+TARGET_LDFLAGS += -L$(STAGING_DIR)/usr/lib
 
 CONFIGURE_ARGS += --disable-manpages --disable-gtk-doc
 CONFIGURE_ARGS += --prefix=/usr --exec-prefix= --sysconfdir=/etc --sbindir=/sbin
@@ -88,6 +89,7 @@ udev-extra-rules-$(CONFIG_UDEV_V4L_ID) += 60-persistent-v4l.rules
 
 define Build/Configure
 	$(call Build/Configure/udev)
+	(cd $(PKG_BUILD_DIR) && chmod +x configure && ./configure $(CONFIGURE_ARGS);)
 endef
 
 define Build/Compile
