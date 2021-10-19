@@ -41,10 +41,6 @@ config UDEV_SELINUX
 	bool "use SELinux"
 	default n
 
-config UDEV_CDROM_ID
-	bool "enable cdrom_id"
-	default n
-
 config UDEV_ACCELEROMETER
 	bool "enable accelerometer"
 	default y
@@ -53,32 +49,16 @@ config UDEV_ATA_ID
 	bool "enable ata_id"
 	default y
 
+config UDEV_CDROM_ID
+	bool "enable cdrom_id"
+	default n
+
 config UDEV_COLLECT
 	bool "enable collect"
 	default n
 
-config UDEV_FIRMWARE
-	bool "install firmware support"
-	default y
-
-config UDEV_INPUT_ID
-	bool "Install input_id"
-	default y
-
-config UDEV_PATH_ID
-	bool "enable path_id"
-	default y
-
-config UDEV_QEMU
-	bool "install qemu specific rules"
-	default y
-
 config UDEV_SCSI_ID
 	bool "enable scsi_id"
-	default y
-
-config UDEV_USB_ID
-	bool "enable usb_id"
 	default y
 
 config UDEV_V4L_ID
