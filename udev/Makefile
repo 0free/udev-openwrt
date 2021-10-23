@@ -25,7 +25,7 @@ define Package/udev
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=udev
-	DEPENDS:=+libblkid +libkmod +libusb-1.0 +usbutils +libudev
+	DEPENDS:= +libblkid +libkmod +libusb-1.0 +usbutils +libudev
 	PROVIDES:=udev
 	CONFLICTS:=eudev
 endef
