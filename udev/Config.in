@@ -11,7 +11,7 @@ config UDEV_LOGGING
 
 config UDEV_GUDEV
 	bool "enable Gobject libudev support"
-	default y
+	default n
 
 config UDEV_INTROSPECTION
 	bool "enable GObject introspection support"
