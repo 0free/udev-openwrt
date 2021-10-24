@@ -25,7 +25,7 @@ define Package/udev
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=udev
-	DEPENDS:= +libblkid +libkmod +libusb-1.0 +usbutils +libudev +glib2
+	DEPENDS:= +libblkid +libkmod +libusb-1.0 +usbutils +libudev
 	PROVIDES:=udev
 	CONFLICTS:=eudev
 endef
@@ -62,6 +62,7 @@ $(if $(CONFIG_UDEV_SELINUX),--with-selinux,--without-selinux)
 
 define Build/Configure
 	$(CP)	usbutils.pc		$(STAGING_DIR)/usr/lib/pkgconfig
+	$(if $(CONFIG_UDEV_GUDEV),$(call Build/Compile/glib2),)
 	$(call Build/Configure/udev)
 	(cd $(PKG_BUILD_DIR) && chmod +x configure && ./configure $(CONFIGURE_ARGS);)
 endef
