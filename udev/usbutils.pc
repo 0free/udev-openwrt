@@ -2,4 +2,4 @@ Name: usbutils
 Description: USB device database
 Version: 014
 
-usdids=/usr/share/hwdata/usb.ids
+usbids=$(STAGING_DIR)/usr/share/hwdata/usb.ids
