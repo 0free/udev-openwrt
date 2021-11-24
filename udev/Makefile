@@ -73,56 +73,58 @@ endef
 
 define Build/InstallDev
 
-	$(INSTALL_DIR)		$(1)/lib
+	
 	$(INSTALL_DIR)		$(1)/usr/include
 	$(INSTALL_DIR)		$(1)/usr/lib/pkgconfig
 	$(INSTALL_DIR)		$(1)/usr/share/pkgconfig
 	$(CP)				$(PKG_INSTALL_DIR)/usr/include/libudev.h			$(1)/usr/include
 	$(CP)				$(PKG_INSTALL_DIR)/usr/share/pkgconfig/udev.pc		$(1)/usr/share/pkgconfig
-	$(CP)				$(PKG_INSTALL_DIR)/lib/libudev.so*					$(1)/lib
 	$(CP)				$(PKG_INSTALL_DIR)/lib/pkgconfig/libudev.pc			$(1)/usr/lib/pkgconfig
 
 endef
 
 define Package/udev/install
 
+	$(INSTALL_DIR)		$(1)/lib
 	$(INSTALL_DIR)		$(1)/sbin
-	$(INSTALL_DIR)		$(1)/lib/udev/rules.d
 	$(INSTALL_DIR)		$(1)/etc/udev/rules.d
+
+	$(CP)				$(PKG_INSTALL_DIR)/lib/libudev.so*					$(1)/lib
 
 	$(INSTALL_BIN)		$(PKG_BUILD_DIR)/udevadm		$(1)/sbin
 	$(INSTALL_BIN)		$(PKG_BUILD_DIR)/udevd			$(1)/sbin
 
 	$(INSTALL_DATA)		$(PKG_INSTALL_DIR)/etc/udev/udev.conf	$(1)/etc/udev
 
+	$(INSTALL_DATA)		$(PKG_INSTALL_DIR)/lib/udev/rules.d/*	$(1)/etc/udev/rules.d
 	$(INSTALL_DATA)		$(PKG_INSTALL_DIR)/lib/udev/rules.d/*	$(1)/lib/udev/rules.d
 
 	$(if $(CONFIG_UDEV_ACCELEROMETER), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/accelerometer	$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/accelerometer	$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_ATA_ID), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/ata_id			$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/ata_id			$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_CDROM_ID), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/cdrom_id		$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/cdrom_id		$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_COLLECT), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/collect			$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/collect			$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_RULE_GENERATOR), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/write_net_rules	$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/write_net_rules	$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_RULE_GENERATOR), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/write_cd_rules	$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/write_cd_rules	$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_SCSI_ID), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/scsi_id			$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/scsi_id			$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_V4L_ID), \
-	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/v4l_id			$(1)/lib/udev \,)
+	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/lib/udev/v4l_id			$(1)/etc/udev \,)
 
 	$(if $(CONFIG_UDEV_RULE_GENERATOR), \
-	$(INSTALL_DATA)		$(PKG_INSTALL_DIR)/lib/udev/rule_generator.functions	$(1)/lib/udev \,)
+	$(INSTALL_DATA)		$(PKG_INSTALL_DIR)/lib/udev/rule_generator.functions	$(1)/etc/udev \,)
 
 endef
 
