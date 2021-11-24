@@ -88,6 +88,7 @@ define Package/udev/install
 	$(INSTALL_DIR)		$(1)/lib
 	$(INSTALL_DIR)		$(1)/sbin
 	$(INSTALL_DIR)		$(1)/etc/udev/rules.d
+	$(INSTALL_DIR)		$(1)/lib/udev/rules.d
 
 	$(CP)				$(PKG_INSTALL_DIR)/lib/libudev.so*					$(1)/lib
 
